@@ -1,0 +1,36 @@
+version: "3"
+services:
+  app:
+    build:
+      context: ./app
+    working_dir: /go/src
+    tty: true
+    ports:
+      - "8080:8080"
+    depends_on:
+      - yandere-db
+    volumes:
+      - ./app:/go/src/app
+    environment:
+      - "REDIS_HOST=redis:6379"
+      - "PORT=8080"
+      - "CORS_URL=http://localhost"
+      - "SQL_URL=postgres://yandere-db:5432/yandere?user=yandere&password=yandere_password&sslmode=disable"
+    
+  yandere-db:
+    image: postgres:alpine
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    volumes:
+      - yandere-db:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d
+      - /etc/localtime:/etc/localtime:ro
+    environment:
+      - POSTGRES_USER=yandere
+      - POSTGRES_PASSWORD=yandere_password
+      - POSTGRES_DB=yandere
+      - TZ=Asia/Tokyo
+  
+volumes:
+  yandere-db:  

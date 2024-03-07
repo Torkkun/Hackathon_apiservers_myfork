@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter Example</title>
+    <style>
+      a.button {
+        text-decoration: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <p>You are logged in {{.UserName}}!</p>
+    <form action="/logout" method="post">
+      <input type="submit" value="Logout">
+  </form>
+  <form action="/tweet" method="post">
+    <p>ツイートする<br>
+    <textarea name="comment" cols="30" rows="5"></textarea></p>
+    <p><input type="submit" value="tweet"></p>
+  </form>
+  </body>
+</html>
